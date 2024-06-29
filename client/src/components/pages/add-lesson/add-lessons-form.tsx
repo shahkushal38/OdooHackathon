@@ -8,7 +8,7 @@ import {
   FieldArray,
 } from "formik";
 import { toast } from "react-toastify";
-import { Button} from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { TiTrash } from "react-icons/ti";  
 import QuizSwitch from "./quiz-switch";
 import { Tooltip } from "@material-tailwind/react";
@@ -17,6 +17,7 @@ import { FormValuesLesson } from "../../../types/lesson";
 import SpinnerDialog from "../../common/spinner-page";
 import { lessonSchema } from "../../../validations/lesson";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const initialValues = {
   title: "",
@@ -34,19 +35,11 @@ const initialValues = {
   videoUrl: "",
 };
 
-
-
 const AddLessonForm: React.FC = () => {
   const [addQuiz, setAddQuiz] = useState<boolean>(false);
-  // const [lessonVideo, setLessonVideo] = useState<File | null>(null);
   const [materialFile, setMaterialFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const {courseId} = useParams()
-
-  // const handleVideoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0] || null;
-  //   setLessonVideo(file);
-  // };
+  const {courseId} = useParams();
 
   const handleMaterialFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -60,7 +53,6 @@ const AddLessonForm: React.FC = () => {
     try {
       setIsUploading(true);
       const formData = new FormData();
-      // lessonVideo && formData.append("media", lessonVideo, "lessonVideo");
       materialFile && formData.append("media", materialFile, "materialFile");
       Object.keys(lesson).forEach((key) => {
         if (key === "questions") {
@@ -71,9 +63,8 @@ const AddLessonForm: React.FC = () => {
         }
       });
 
-      const response = await addLesson(courseId??"", formData);
+      const response = await addLesson(courseId ?? "", formData);
       setIsUploading(false);
-      // setLessonVideo(null);
       setMaterialFile(null);
       resetForm();
       toast.success(response.message, {
@@ -82,6 +73,29 @@ const AddLessonForm: React.FC = () => {
     } catch (error) {
       setIsUploading(false);
       toast.error("Failed to add lesson", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+  };
+
+  const handleGenerateQuiz = async (videoUrl: string, setFieldValue: (field: string, value: any) => void) => {
+    try {
+      const response = await axios.post("http://localhost:3005/api/quizGeneration/generateQuiz", { videos: videoUrl });
+      const quizData = JSON.parse(response.data.data);
+      const formattedQuestions = quizData.questions.map((q: any) => ({
+        question: q.question,
+        options: q.options.map((opt: string) => ({
+          option: opt,
+          isCorrect: opt === q.correct_answer,
+        })),
+      }));
+      setFieldValue("questions", formattedQuestions);
+      setAddQuiz(true);
+      toast.success("Quiz generated successfully", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    } catch (error) {
+      toast.error("Failed to generate quiz", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     }
@@ -96,7 +110,7 @@ const AddLessonForm: React.FC = () => {
           validationSchema={lessonSchema}
           onSubmit={handleSubmit}
         >
-          {({ values }) => (
+          {({ values, setFieldValue }) => (
             <Form className='mt-10 space-y-6'>
               <div className='flex gap-4 justify-between'>
                 <div className='w-1/2'>
@@ -217,6 +231,15 @@ const AddLessonForm: React.FC = () => {
                       className='text-red-500 text-sm'
                     />
                   </div>
+                  <div className="mt-4">
+                    <Button 
+                      type="button" 
+                      color="blue" 
+                      onClick={() => handleGenerateQuiz(values.videoUrl, setFieldValue)}
+                    >
+                      Generate Quiz from Video
+                    </Button>
+                  </div>
                 </div>
                 <div className='w-1/2'>
                   <label
@@ -242,96 +265,6 @@ const AddLessonForm: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {/* <div className='flex gap-4 justify-between'>
-                <div className='w-1/2'>
-                  <label
-                    htmlFor='videoFile'
-                    className='block text-sm font-medium leading-6 text-gray-900'
-                  >
-                    Video file
-                  </label>
-                  <div className='mt-2'>
-                    <input
-                      id='videoFile'
-                      name='videoFile'
-                      accept='video/*'
-                      type='file'
-                      required
-                      onChange={handleVideoFileChange}
-                      autoComplete='off'
-                      className='pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
-                    />
-                    {lessonVideo && (
-                      <video
-                        src={URL.createObjectURL(lessonVideo)}
-                        className='h-52 w-full rounded-md p-2 mt-3'
-                        controls
-                      />
-                    )}
-                    <ErrorMessage
-                      name='videoFile'
-                      component='div'
-                      className='text-red-500 text-sm'
-                    />
-                  </div>
-                </div>
-                <div className='w-1/2'>
-                  <label
-                    htmlFor='studyMaterials'
-                    className='block text-sm font-medium leading-6 text-gray-900'
-                  >
-                    Study materials
-                  </label>
-                  <div className='mt-2'>
-                    <input
-                      id='studyMaterials'
-                      name='studyMaterials'
-                      type='file'
-                      accept='application/pdf'
-                      required
-                      onChange={handleMaterialFileChange}
-                      autoComplete='off'
-                      className='pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
-                    />
-                    {materialFile && (
-                      <img
-                        src={URL.createObjectURL(materialFile)}
-                        className='h-52 w-full rounded-md p-2 mt-3'
-                      />
-                    )}
-                    <ErrorMessage
-                      name='studyMaterials'
-                      component='div'
-                      className='text-red-500 text-sm'
-                    />
-                  </div>
-                </div>
-              </div> */}
-
-              {/* <div>
-                <label
-                  htmlFor='duration'
-                  className='block text-sm font-medium leading-6 text-gray-900'
-                >
-                  Duration (in minutes)
-                </label>
-                <div className='mt-2'>
-                  <Field
-                    id='duration'
-                    name='duration'
-                    type='number'
-                    autoComplete='off'
-                    required
-                    className='pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
-                  />
-                  <ErrorMessage
-                    name='duration'
-                    component='div'
-                    className='text-red-500 text-sm'
-                  />
-                </div>
-              </div> */}
-
               <div>
                 <div className='flex items-center mb-4'>
                   <QuizSwitch addQuiz={addQuiz} setAddQuiz={setAddQuiz} />
