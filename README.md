@@ -1,19 +1,21 @@
-# E-Learning Platform: TypeScript | Javascript | React.js | Node.js | Express.js | Docker | Clean Architecture | MongoDb | Redis
+# E-Learning Platform: 
 
-The project is a comprehensive online learning platform that connects teachers and students. Teachers can upload courses, and students can access and watch them. The technology stack includes Node.js, Express, React, MongoDB, Mongoose, TypeScript, Redux, Tailwind CSS, and Redis Cache. The project follows the principles of clean architecture to ensure maintainability and scalability.
+Tech Stack - TypeScript | Javascript | React.js | Node.js | Express.js | MongoDb | Redis
+
+The project is a comprehensive online learning platform that connects teachers and students. Teachers can upload courses, and students can access and watch them. Moreover, teachers and students get personalised dashboards to monitor and track performances. The project follows the principles of clean architecture to ensure maintainability and scalability.
 
 ## Installation
 
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/abinth11/TutorTrek.git
+   git clone https://github.com/shahkushal38/OdooHackathon.git
    ```
 
 2. Navigate to the project directory:
 
    ```shell
-   cd TutorTrek
+   cd OdooHackathon
    ```
 3. Navigate to client directory and server directory
 
@@ -25,7 +27,7 @@ The project is a comprehensive online learning platform that connects teachers a
 4. Install the dependencies separately(install in both client and server)
 
    ```shell
-   yarn install 
+   npm install 
    ```
 
 5. Set up the required environment variables. Rename the `.env.example` file to `.env` and provide the necessary values for your environment.
@@ -36,11 +38,11 @@ The project is a comprehensive online learning platform that connects teachers a
 
    -server side
    ```shell
-   yarn run dev
+   npm run dev
    ```
    -client side
    ```shell
-   yarn start 
+   npm start 
    ```
 
 
@@ -57,7 +59,8 @@ The project is a comprehensive online learning platform that connects teachers a
 - Student dashboard to browse and watch available courses
 - Course upload and management for teachers
 - Course browsing and playback for students
-- Admin panel for managing users, courses, and system settings
+- Panel for managing users, courses, and system settings
+- Dashboard for personalised evaluation of a users performance
 
 ## Architecture and Technologies
 
@@ -83,7 +86,6 @@ Here's an overview of the main folders and their purposes in the project:
 .
 ├── /client           # Frontend codebase
 ├── /server           # Backend codebase
-└── /conf.d           # Nginx configuration for full stack application
 ```
 
 For more detailed information, refer to the project's folder structure documentation [here](/docs/folder-structure.md).
@@ -154,30 +156,4 @@ axios is a popular JavaScript library for making HTTP requests from web browsers
 
 ### Formik
 Formik is a form management library for React that simplifies the process of building complex forms and managing form state. It provides a set of React components and hooks to handle form rendering, validation, submission, and error handling. Formik integrates seamlessly with React's component model and offers features like form field validation, form-wide state management, input masking, and more. It aims to streamline the development of forms in React applications and reduce boilerplate code.
-
-<!--## Deployment
-
-To deploy the online learning platform to a production environment, follow the deployment guidelines outlined in the [Deployment Documentation](/docs/deployment.md).
-
-## Contributing
-
-Contributions to the project are welcome. To contribute, please follow the guidelines outlined in the [Contributing Documentation](/docs/contributing.md).
--->
-
-## Contact
-
-For any questions, feedback, or inquiries, please reach out to:
-
-- Abin T H
-  - Email: abinth250@example.com
-  - LinkedIn: [linkedin-profile](https://www.linkedin.com/in/abin-th-170676245/)
-
-## Design Files and API Documentation
-
-* [Figma Design Files](https://www.figma.com/file/xSUUeK3lB9XHqBe3pg7pnM/TutorTrek?type=design&node-id=84%3A7156&t=uJ3S7XQV7OjJphmL-1)
-* [Modules Specifications](https://drive.google.com/file/d/10aB7mVSsG_oG9V9wcK65orqcLoon2Dl4/view?usp=sharing)
-* [API Documentation](https://documenter.getpostman.com/view/23308654/2s93mAVL88)
-* [Database Design](https://drive.google.com/file/d/1N3YZ22s2cJnA1sSa5P5a-1ECzC70ztQu/view?usp=sharing)
-* [Live Link](https://tutortrek.online/)
-
 
