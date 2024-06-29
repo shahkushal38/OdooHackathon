@@ -1,4 +1,4 @@
-# E-Learning Platform: 
+# E-Learning Platform: SmartTutor
 
 Tech Stack - TypeScript | Javascript | React.js | Node.js | Express.js | MongoDb | Redis
 
