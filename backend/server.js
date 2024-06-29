@@ -1,5 +1,5 @@
 // LOAD ENV FILE START ==================================================
-if (process.env.NODE_ENV === 'development') require('dotenv').config({ path: process.env.PWD + '/.env' })
+if (process.env.NODE_ENV === 'development') require('dotenv').config({ path:'./.env' })
 // LOAD ENV FILE END ====================================================
 
 async function startNodeApp () {

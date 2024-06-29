@@ -3,7 +3,10 @@ const router = express.Router()
 const __constants = require('../../config/constants')
 const validationOfAPI = require('../../middlewares/validation')
 const userService = require('../../services/user/userServices')
-
+const summarizeService = require('../../services/summarization/summarizeService')
+const multer = require('multer')
+  const upload = multer()
+// const cache = require('../../middlewares/requestCacheMiddleware') // uncomment the statement whenever the redis cache is in use.
 
 /**
  * @namespace -HEALTH-CHECK-MODULE-
@@ -22,25 +25,32 @@ const userService = require('../../services/user/userServices')
  * *** Last-Updated :- Vasim Gujrati, 20th March 2023 ***
  */
 const validationSchema = {
-    email: {
-        type: 'string',
-        required: true
-    },
-    password: {
-        type: 'string',
-        required: true
+    type: 'object',
+    required: true,
+    properties: {
     }
 }
 const validation = (req, res, next) => {
   return validationOfAPI(req, res, next, validationSchema, 'body')
 }
-const login  = async (req, res) => {
+const summarizeDoc  = async (req, res) => {
   try {
-    const response = await userService.login(req.body)
+    const response = await summarizeService.createSummaryFromDoc(req.files)
     res.sendJson({ type: __constants.RESPONSE_MESSAGES.SUCCESS, data: response })
   } catch (err) {
     return res.sendJson({ type: err.type || __constants.RESPONSE_MESSAGES.SERVER_ERROR, err: err.err || err })
   }
 }
-router.post('/login', validation, login)
+const summarizeVideo  = async (req, res) => {
+    try {
+      const response = await summarizeService.createSummaryFromVideo(req.body.videos)
+      res.sendJson({ type: __constants.RESPONSE_MESSAGES.SUCCESS, data: response })
+    } catch (err) {
+      return res.sendJson({ type: err.type || __constants.RESPONSE_MESSAGES.SERVER_ERROR, err: err.err || err })
+    }
+  }
+
+router.post('/summarizeDoc',upload.array('files'), validation,summarizeDoc)
+router.post('/summarizeVideo',validation,summarizeVideo)
+
 module.exports = router
