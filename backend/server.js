@@ -1,6 +1,5 @@
 // LOAD ENV FILE START ==================================================
 require('dotenv').config({ path: './.env' })
-// LOAD ENV FILE END ====================================================
 
 async function startNodeApp () {
   if (process.env.USE_VAULT === 'true') await require('./lib/util/vault').run()
