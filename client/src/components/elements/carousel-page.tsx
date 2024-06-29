@@ -22,7 +22,7 @@ export default function CarouselComponent() {
               color='white'
               className='mb-4 text-3xl md:text-4xl lg:text-5xl'
             >
-              Welcome to TutorTrek
+              Welcome to SmartTutor
             </Typography>
             <Typography
               variant='lead'

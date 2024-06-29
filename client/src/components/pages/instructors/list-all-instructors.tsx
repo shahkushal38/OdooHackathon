@@ -114,7 +114,7 @@ const ListAllInstructors: React.FC<Props> = () => {
         </div>
         <div className="block text-center">
           <p className="text-customFontColorBlack md:text-xl sm:text-4xl font-semibold">
-            Meet Tutor Trek Subject Experts
+            Meet Smart Tutor Subject Experts
           </p>
         </div>
       </div>
