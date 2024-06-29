@@ -100,10 +100,7 @@ To configure the project, you need to set up the following environment variables
 
 - `PORT`: The port on which the server will run.
 - `MONGODB_URI`: The URI for connecting to the MongoDB database.
-- `REDIS_URL`: The URL for connecting
-
- to the Redis cache.
-- ...
+- `REDIS_URL`: The URL for connecting to the Redis cache.
 
 For a full list of required environment variables, refer to the project's configuration documentation [here](/docs/configuration.md).
 
