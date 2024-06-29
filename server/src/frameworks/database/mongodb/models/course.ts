@@ -87,7 +87,7 @@ const courseSchema = new mongoose.Schema({
   },
   introduction: {
     type: FileSchema,
-    required: true
+    // required: true
   },
   coursesEnrolled: [
     {
@@ -114,6 +114,9 @@ const courseSchema = new mongoose.Schema({
     min: 0,
     max: 100,
     default: 0
+  },
+  videoUrl: {
+    type: String
   }
 });
 

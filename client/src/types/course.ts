@@ -1,4 +1,5 @@
 export interface CourseInterface {
+    videoUrl: string;
     _id: string;
     title: string;
     instructorId: string;

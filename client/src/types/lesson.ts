@@ -7,6 +7,7 @@ export interface FormValuesLesson {
     contents: string;
     duration: string;
     questions: Question[];
+    videoUrl: string;
   }
   
   interface Question {

@@ -7,7 +7,8 @@ export const lessonDbRepository = (
   const addLesson = async (
     courseId: string,
     instructorId: string,
-    lesson: CreateLessonInterface
+    lesson: CreateLessonInterface,
+    
   ) => await repository.addLesson(courseId, instructorId, lesson);
 
   const editLesson = async (

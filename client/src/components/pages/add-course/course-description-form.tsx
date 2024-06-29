@@ -13,6 +13,7 @@ export interface FormValues {
   category: string;
   price: string;
   tags:string;
+  videoUrl: string;
 }
 
 const initialValues: FormValues = {
@@ -24,7 +25,8 @@ const initialValues: FormValues = {
   lessons:"",
   category: "",
   price: "",
-  tags:""
+  tags:"",
+  videoUrl: "",
 };
 
 type CourseDescriptionFormProps = {
@@ -130,6 +132,25 @@ const CourseDescriptionForm: React.FC<CourseDescriptionFormProps> = ({onSubmit})
               />
               <ErrorMessage
                 name='tags'
+                component='div'
+                className='text-red-500 text-sm'
+              />
+            </div>
+            <div className='mb-2'>
+              <label
+                htmlFor='videoUrl'
+                className='block text-sm font-medium leading-6 text-gray-900'
+              >
+                Video Url
+              </label>
+              <Field
+                type='text'
+                id='videoUrl'
+                name='videoUrl'
+                className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+              />
+              <ErrorMessage
+                name='videoUrl'
                 component='div'
                 className='text-red-500 text-sm'
               />

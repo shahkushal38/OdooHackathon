@@ -15,7 +15,7 @@ export const addLessonsU = async (
   lesson: CreateLessonInterface,
   lessonDbRepository: ReturnType<LessonDbRepositoryInterface>,
   cloudService: ReturnType<CloudServiceInterface>,
-  quizDbRepository: ReturnType<QuizDbInterface>
+  quizDbRepository: ReturnType<QuizDbInterface>,
 ) => {
   if (!courseId) {
     throw new AppError(
@@ -35,45 +35,45 @@ export const addLessonsU = async (
     throw new AppError('Data is not provided', HttpStatusCodes.BAD_REQUEST);
   }
 
-  if (media) {
-    const videoFile = media[0];
-    const tempFilePath = './temp_video.mp4';
-    fs.writeFileSync(tempFilePath, videoFile.buffer);
+  // if (media) {
+  //   const videoFile = media[0];
+  //   const tempFilePath = './temp_video.mp4';
+  //   fs.writeFileSync(tempFilePath, videoFile.buffer);
 
-    const getVideoDuration = () =>
-      new Promise<string>((resolve, reject) => {
-        ffmpeg(tempFilePath)
-          .setFfprobePath(ffprobePath.path)
-          .ffprobe((err: Error | null, data: any) => {
-            fs.unlinkSync(tempFilePath);
+  //   const getVideoDuration = () =>
+  //     new Promise<string>((resolve, reject) => {
+  //       ffmpeg(tempFilePath)
+  //         .setFfprobePath(ffprobePath.path)
+  //         .ffprobe((err: Error | null, data: any) => {
+  //           fs.unlinkSync(tempFilePath);
 
-            if (err) {
-              console.error('Error while probing the video:', err);
-              reject(err);
-            }
+  //           if (err) {
+  //             console.error('Error while probing the video:', err);
+  //             reject(err);
+  //           }
 
-            const duration: string = data.format.duration;
-            resolve(duration);
-          });
-      });
+  //           const duration: string = data.format.duration;
+  //           resolve(duration);
+  //         });
+  //     });
 
-    try {
-      const videoDuration = await getVideoDuration();
-      lesson.duration = parseFloat(videoDuration);
-    } catch (error) {
-      console.error('Error while getting video duration:', error);
-    }
-  }
+  //   try {
+  //     const videoDuration = await getVideoDuration();
+  //     lesson.duration = parseFloat(videoDuration);
+  //   } catch (error) {
+  //     console.error('Error while getting video duration:', error);
+  //   }
+  // }
 
-  if (media) {
-    lesson.media = await Promise.all(
-      media.map(async (files) => await cloudService.upload(files))
-    );
-  }
+  // if (media) {
+  //   lesson.media = await Promise.all(
+  //     media.map(async (files) => await cloudService.upload(files))
+  //   );
+  // }
   const lessonId = await lessonDbRepository.addLesson(
     courseId,
     instructorId,
-    lesson
+    lesson,
   );
   if (!lessonId) {
     throw new AppError('Data is not provided', HttpStatusCodes.BAD_REQUEST);

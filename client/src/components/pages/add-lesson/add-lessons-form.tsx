@@ -31,21 +31,22 @@ const initialValues = {
       options: [{ option: "", isCorrect: false }],
     },
   ],
+  videoUrl: "",
 };
 
 
 
 const AddLessonForm: React.FC = () => {
   const [addQuiz, setAddQuiz] = useState<boolean>(false);
-  const [lessonVideo, setLessonVideo] = useState<File | null>(null);
+  // const [lessonVideo, setLessonVideo] = useState<File | null>(null);
   const [materialFile, setMaterialFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const {courseId} = useParams()
 
-  const handleVideoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || null;
-    setLessonVideo(file);
-  };
+  // const handleVideoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0] || null;
+  //   setLessonVideo(file);
+  // };
 
   const handleMaterialFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
@@ -59,7 +60,7 @@ const AddLessonForm: React.FC = () => {
     try {
       setIsUploading(true);
       const formData = new FormData();
-      lessonVideo && formData.append("media", lessonVideo, "lessonVideo");
+      // lessonVideo && formData.append("media", lessonVideo, "lessonVideo");
       materialFile && formData.append("media", materialFile, "materialFile");
       Object.keys(lesson).forEach((key) => {
         if (key === "questions") {
@@ -72,7 +73,7 @@ const AddLessonForm: React.FC = () => {
 
       const response = await addLesson(courseId??"", formData);
       setIsUploading(false);
-      setLessonVideo(null);
+      // setLessonVideo(null);
       setMaterialFile(null);
       resetForm();
       toast.success(response.message, {
@@ -196,6 +197,54 @@ const AddLessonForm: React.FC = () => {
               <div className='flex gap-4 justify-between'>
                 <div className='w-1/2'>
                   <label
+                    htmlFor='videoUrl'
+                    className='block text-sm font-medium leading-6 text-gray-900'
+                  >
+                    Video Url
+                  </label>
+                  <div className='mt-2'>
+                    <Field
+                      as='textarea'
+                      id='videoUrl'
+                      name='videoUrl'
+                      rows={4}
+                      cols={40}
+                      className='pl-2 block w-full max-w-xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    />
+                    <ErrorMessage
+                      name='videoUrl'
+                      component='div'
+                      className='text-red-500 text-sm'
+                    />
+                  </div>
+                </div>
+                <div className='w-1/2'>
+                  <label
+                    htmlFor='about'
+                    className='block text-sm font-medium leading-6 text-gray-900'
+                  >
+                    About
+                  </label>
+                  <div className='mt-2'>
+                    <Field
+                      as='textarea'
+                      id='about'
+                      name='about'
+                      rows={4}
+                      cols={40}
+                      className='pl-2 block w-full max-w-xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    />
+                    <ErrorMessage
+                      name='about'
+                      component='div'
+                      className='text-red-500 text-sm'
+                    />
+                  </div>
+                </div>
+              </div>
+              {/* <div className='flex gap-4 justify-between'>
+                <div className='w-1/2'>
+                  <label
                     htmlFor='videoFile'
                     className='block text-sm font-medium leading-6 text-gray-900'
                   >
@@ -257,7 +306,7 @@ const AddLessonForm: React.FC = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* <div>
                 <label

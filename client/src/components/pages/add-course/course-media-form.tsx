@@ -9,18 +9,18 @@ type CourseMediaFormProps = {
 const CourseMediaForm: React.FC<CourseMediaFormProps> = ({ onSubmit }) => {
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    introductionVideo: Yup.mixed().required("Introduction video is required"),
+    // introductionVideo: Yup.mixed().required("Introduction video is required"),
     thumbnail: Yup.mixed().required("Thumbnail is required"),
   });
 
   // Define the initial form values
   const initialValues = {
-    introductionVideo: null,
+    // introductionVideo: null,
     thumbnail: null,
   };
 
   // Define state variables to store the selected video and thumbnail
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  // const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState<string | null>(null);
 
   // Handle form submission
@@ -30,12 +30,12 @@ const CourseMediaForm: React.FC<CourseMediaFormProps> = ({ onSubmit }) => {
   };
 
   // Handle video selection
-  const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files?.[0];
-    if (file) {
-      setSelectedVideo(URL.createObjectURL(file));
-    }
-  };
+  // const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.currentTarget.files?.[0];
+  //   if (file) {
+  //     setSelectedVideo(URL.createObjectURL(file));
+  //   }
+  // };
 
   // Handle thumbnail selection
   const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +53,7 @@ const CourseMediaForm: React.FC<CourseMediaFormProps> = ({ onSubmit }) => {
         onSubmit={handleSubmit}
       >
         <Form>
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <label htmlFor="introductionVideo" className="block font-bold mb-1">
               Introduction Video
             </label>
@@ -80,7 +80,7 @@ const CourseMediaForm: React.FC<CourseMediaFormProps> = ({ onSubmit }) => {
                 </>
               )}
             </Field>
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label htmlFor="thumbnail" className="block font-bold mb-1">

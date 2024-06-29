@@ -17,6 +17,7 @@ interface CourseFormValues {
   syllabus: string;
   requirements: string;
   price: string;
+  videoUrl: string;
   [key: string]: string;
 }
 
@@ -31,6 +32,7 @@ const initialValues = {
   syllabus: "",
   requirements: "",
   price: "",
+  videoUrl: "",
 };
 
 const CombinedForm: React.FC = () => {
@@ -208,6 +210,25 @@ const CombinedForm: React.FC = () => {
                     className='text-red-500 text-sm'
                   />
                 </div>
+                <div className='mb-3'>
+                  <label
+                    htmlFor='videoUrl'
+                    className='block text-sm font-medium leading-6 text-gray-900'
+                  >
+                    Video Url
+                  </label>
+                  <Field
+                    type='text'
+                    id='videoUrl'
+                    name='videoUrl'
+                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                  />
+                  <ErrorMessage
+                    name='videoUrl'
+                    component='div'
+                    className='text-red-500 text-sm'
+                  />
+                </div>
 
                 <div className='mb-3'>
                   <div className='mb-5 mt-2 pl-2 pt-5 '>
@@ -240,7 +261,7 @@ const CombinedForm: React.FC = () => {
                     </div>
                   )}
 
-                  <div className='mb-2'>
+                  {/* <div className='mb-2'>
                     <label
                       htmlFor='introduction-video'
                       className='block text-sm font-medium leading-6 text-gray-900'
@@ -264,7 +285,7 @@ const CombinedForm: React.FC = () => {
                       component='div'
                       className='text-red-500 text-sm'
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div>

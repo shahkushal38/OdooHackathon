@@ -15,6 +15,7 @@ import { selectStudentId } from "../../../redux/reducers/studentSlice";
 import { selectCourse } from "redux/reducers/courseSlice";
 import ShimmerEffectWatchLessons from "../../shimmer/watch-lessons-shimmer";
 import ShimmerVideoPlayer from "../../shimmer/shimmer-video-player";
+import AISummary from "./ai-summary";
 
 const WatchLessons: React.FC = () => {
   const [selectedItemIndex, setSelectedItemIndex] = useState(0);
@@ -22,7 +23,7 @@ const WatchLessons: React.FC = () => {
   const [isLoadingLesson, setIsLoadingLesson] = useState(false);
   const [lesson, setLesson] = useState<ApiResponseLesson | null>(null);
   const [allLessons, setAllLessons] = useState<Array<ApiResponseLesson>>([]);
-  const [videoKey, setVideoKey] = useState<string | null>(null);
+  // const [videoKey, setVideoKey] = useState<string | null>(null);
   const { lessonId } = useParams();
   const location = useLocation();
   const [currentLessonId, setCurrentLessonId] = useState<string | undefined>(
@@ -37,9 +38,10 @@ const WatchLessons: React.FC = () => {
     isCoursePurchased = currentCourse.coursesEnrolled.includes(studentId);
   }
   console.log(currentCourse)
-  console.log(currentCourse?.introduction.key)
+  // console.log(currentCourse?.introduction.key)
 
   const handleItemClick = (index: number) => {
+    console.log(index);
     setSelectedItemIndex(index);
   };
 
@@ -63,10 +65,10 @@ const WatchLessons: React.FC = () => {
       setIsLoadingLesson(true);
       const response = await getLessonById(lessonId);
       setLesson(response?.data);
-      const key = response?.data?.media.find(
-        (media: Media) => media.name === "lessonVideo"
-      )?.key;
-      setVideoKey(key);
+      // const key = response?.data?.media.find(
+      //   (media: Media) => media.name === "lessonVideo"
+      // )?.key;
+      // setVideoKey(key);
       setTimeout(() => {
         setIsLoadingLesson(false);
       }, 2000);
@@ -100,8 +102,10 @@ const WatchLessons: React.FC = () => {
     content = <AboutLesson about={lesson?.description ?? ""} />;
   } else if (selectedItemIndex === 1) {
     content = <Discussion lessonId={currentLessonId ?? ""} />;
-  } else {
+  } else if (selectedItemIndex === 2) {
     content = <Quizzes lessonId={lessonId} />;
+  } else {
+    content = <AISummary videoUrl={lesson?.videoUrl} />;
   }
   if (isLoadingAllLessons && isLoadingLesson) {
     return <ShimmerEffectWatchLessons />;
@@ -114,7 +118,7 @@ const WatchLessons: React.FC = () => {
         <div className='md:w-3/4 w-full  overflow-y-scroll scrollbar-track-blue-gray-50 scrollbar-thumb-gray-400 scrollbar-thin scrollbar-h-md'>
           <div className='h-3/4'>
             <VideoPlayer
-              videoKey={videoKey}
+              videoUrl={lesson?.videoUrl}
               isCoursePurchased={currentCourse && currentCourse.isPaid ? isCoursePurchased : true}
               />
           </div>
@@ -159,6 +163,16 @@ const WatchLessons: React.FC = () => {
                 onClick={() => handleItemClick(2)}
               >
                 Quizzes
+              </li>
+              <li
+                className={`ml-6 cursor-pointer ${
+                  selectedItemIndex === 3
+                    ? "border-b-4 rounded-b-md  border-blue-gray-700"
+                    : ""
+                }`}
+                onClick={() => handleItemClick(3)}
+              >
+                AI Generated Summary
               </li>
             </ul>
           </div>

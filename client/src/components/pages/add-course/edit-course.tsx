@@ -25,6 +25,7 @@ interface InitialValType {
   category: string;
   price: string | number;
   tags: string;
+  videoUrl: string;
   syllabus: string;
   level:string;
   [key: string]: string | number;
@@ -39,6 +40,7 @@ const initialValues: InitialValType = {
   category: "",
   price: "",
   tags: "",
+  videoUrl: "",
   about: "",
   syllabus: "",
   level:""
@@ -88,6 +90,7 @@ const EditCourse: React.FC = () => {
       initialValues.about = course.about;
       initialValues.syllabus = course.syllabus.join("");
       initialValues.requirements = course.requirements.join("");
+      initialValues.videoUrl = course.videoUrl;
       setPaid(course.isPaid);
     }
   }, [course]);

@@ -6,7 +6,8 @@ export interface CreateLessonInterface {
     instructorId: string;
     courseId: string;
     media: {name:string,key:string} [],
-    questions:Question[]
+    questions:Question[],
+    videoUrl:string
   }
 
   export interface EditLessonInterface {
@@ -17,7 +18,8 @@ export interface CreateLessonInterface {
     instructorId?: string;
     courseId?: string;
     media?: {name:string,key:string} [],
-    questions?:Question[]
+    questions?:Question[],
+    videoUrl?:string
   }
 
  

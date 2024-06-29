@@ -22,7 +22,8 @@ export interface AddCourseInfoInterface {
     guidelines:FileSchema;
     instructorId: string;
     rating: number;
-    isVerified: boolean;
+    isVerified: boolean;,
+    videoUrl:string;
   }
 
   export interface CourseInterface extends AddCourseInfoInterface {
@@ -67,4 +68,5 @@ export interface AddCourseInfoInterface {
     tags?: string[]|string;
     enrollmentLimit?: number;
     completionStatus?: number;
+    videoUrl?:string;
   }

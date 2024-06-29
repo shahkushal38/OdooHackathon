@@ -31,7 +31,7 @@ const LessonSchema = new Schema({
   },
   duration: {
     type: Number,
-    required: true,
+    // required: true,
     min: 0
   },
   instructorId: {
@@ -58,6 +58,9 @@ const LessonSchema = new Schema({
   updatedAt: {
     type: Date,
     default: Date.now
+  },
+  videoUrl: {
+    type: String,
   }
 });
 
